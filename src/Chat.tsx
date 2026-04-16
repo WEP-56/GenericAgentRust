@@ -152,8 +152,8 @@ export default function Chat() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-transparent font-sans text-black relative">
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#000 2px, transparent 2px)', backgroundSize: '32px 32px' }}></div>
+    <div className="flex flex-col h-full bg-transparent font-sans relative" style={{ color: "var(--ink)" }}>
+      <div className="absolute inset-0 opacity-[0.08] pointer-events-none" style={{ backgroundImage: 'radial-gradient(var(--grid-dot) 2px, transparent 2px)', backgroundSize: '32px 32px' }}></div>
       
       <header className="hidden"></header>
 
@@ -167,21 +167,21 @@ export default function Chat() {
           if (isTool) {
             return (
               <div key={idx} className="flex flex-col items-start gap-2 ml-16 max-w-[85%] relative group">
-                <div className="absolute -left-6 top-4 w-4 h-[3px] bg-black opacity-30 group-hover:opacity-100 transition-opacity"></div>
+                <div className="absolute -left-6 top-4 w-4 h-[3px] opacity-30 group-hover:opacity-100 transition-opacity" style={{ backgroundColor: "var(--toolbar-dim)" }}></div>
                 <div 
-                  className="flex items-center gap-2 text-xs text-black font-black bg-[#ffde59] border-[3px] border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] px-3 py-1.5 uppercase tracking-wide" 
-                  style={{ borderRadius: '255px 15px 225px 15px/15px 225px 15px 255px', filter: 'url(#wobbly-edge)' }}
+                  className="flex items-center gap-2 text-xs font-black border-[3px] px-3 py-1.5 uppercase tracking-wide" 
+                  style={{ borderRadius: '255px 15px 225px 15px/15px 225px 15px 255px', filter: 'url(#wobbly-edge)', backgroundColor: "var(--accent)", color: "var(--ink)", borderColor: "var(--line)", boxShadow: "3px 3px 0 0 var(--shadow-strong)" }}
                 >
                   <PlayCircle className="w-4 h-4" />
                   Execution: {msg.name}
                 </div>
                 <div 
-                  className="bg-[#f4f4f0] border-[3px] border-black text-black text-sm p-4 font-mono overflow-x-auto w-full shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] relative" 
-                  style={{ borderRadius: '15px 255px 15px 225px/225px 15px 255px 15px', borderTopLeftRadius: '0px' }}
+                  className="border-[3px] text-sm p-4 font-mono overflow-x-auto w-full relative" 
+                  style={{ borderRadius: '15px 255px 15px 225px/225px 15px 255px 15px', borderTopLeftRadius: '0px', backgroundColor: "var(--surface-muted)", color: "var(--ink)", borderColor: "var(--line)", boxShadow: "5px 5px 0 0 var(--shadow-strong)" }}
                 >
                   <div className="absolute top-2 right-2 flex gap-1">
-                    <div className="w-2 h-2 rounded-full border border-black bg-gray-300"></div>
-                    <div className="w-2 h-2 rounded-full border border-black bg-gray-300"></div>
+                    <div className="w-2 h-2 rounded-full border" style={{ borderColor: "var(--line)", backgroundColor: "var(--toolbar-dot)" }}></div>
+                    <div className="w-2 h-2 rounded-full border" style={{ borderColor: "var(--line)", backgroundColor: "var(--toolbar-dot)" }}></div>
                   </div>
                   <pre className="mt-2 leading-relaxed">{msg.content}</pre>
                 </div>
@@ -192,40 +192,45 @@ export default function Chat() {
           return (
             <div key={idx} className={`flex gap-5 ${isUser ? "flex-row-reverse" : "flex-row"} items-start`}>
               <div 
-                className={`w-12 h-12 border-[3px] border-black flex items-center justify-center shrink-0 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] relative z-10 ${isUser ? "bg-black" : "bg-white"}`}
+                className="w-12 h-12 border-[3px] flex items-center justify-center shrink-0 relative z-10"
                 style={{ 
                   borderRadius: isUser ? '15px 255px 15px 225px/225px 15px 255px 15px' : '255px 15px 225px 15px/15px 225px 15px 255px',
-                  filter: 'url(#wobbly-edge)'
+                  filter: 'url(#wobbly-edge)',
+                  backgroundColor: isUser ? "var(--ink)" : "var(--surface-bg)",
+                  borderColor: "var(--line)",
+                  boxShadow: "4px 4px 0 0 var(--shadow-strong)"
                 }}
               >
-                {isUser ? <User className="w-6 h-6 text-white" /> : <Bot className="w-7 h-7 text-black" />}
+                {isUser ? <User className="w-6 h-6" style={{ color: "var(--paper-bg)" }} /> : <Bot className="w-7 h-7" style={{ color: "var(--ink)" }} />}
               </div>
               <div className={`flex flex-col ${isUser ? "items-end" : "items-start"} max-w-[85%] relative`}>
                 {msg.content && (
                   <div 
-                    className={`px-6 py-5 border-[3px] border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] text-base leading-relaxed relative ${
-                      isUser 
-                        ? "bg-white text-black" 
-                        : msg.is_error 
-                          ? "bg-[#ff9999] text-black"
-                          : "bg-white text-black"
-                    }`}
+                    className="px-6 py-5 border-[3px] text-base leading-relaxed relative"
                     style={{ 
                       borderRadius: '255px 15px 225px 15px/15px 225px 15px 255px',
                       borderTopRightRadius: isUser ? '0px' : undefined,
-                      borderTopLeftRadius: !isUser ? '0px' : undefined
+                      borderTopLeftRadius: !isUser ? '0px' : undefined,
+                      backgroundColor: isUser
+                        ? "var(--surface-bg)"
+                        : msg.is_error
+                          ? "var(--danger-soft)"
+                          : "var(--surface-bg)",
+                      color: "var(--ink)",
+                      borderColor: "var(--line)",
+                      boxShadow: "6px 6px 0 0 var(--shadow-strong)"
                     }}
                   >
                     {/* 纸张高光效果 */}
-                    <div className="absolute top-1 left-1 right-1 h-2 bg-white opacity-40 rounded-full blur-[1px] pointer-events-none"></div>
+                    <div className="absolute top-1 left-1 right-1 h-2 opacity-40 rounded-full blur-[1px] pointer-events-none" style={{ backgroundColor: "var(--paper-glow)" }}></div>
                     
                     {msg.is_error && (
-                      <div className="flex items-center gap-2 font-black text-black border-b-[3px] border-black pb-3 mb-4 uppercase tracking-wider text-lg">
+                      <div className="flex items-center gap-2 font-black border-b-[3px] pb-3 mb-4 uppercase tracking-wider text-lg" style={{ color: "var(--ink)", borderColor: "var(--line)" }}>
                         <AlertTriangle className="w-6 h-6" />
                         Something went wrong
                       </div>
                     )}
-                    <div className="prose prose-base max-w-none prose-p:my-3 prose-p:font-medium prose-pre:bg-[#1a1a1a] prose-pre:text-gray-100 prose-pre:border-[3px] prose-pre:border-black prose-pre:shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] prose-pre:p-0 prose-pre:overflow-hidden prose-table:border-collapse prose-table:border-[3px] prose-table:border-black prose-th:border-[3px] prose-th:border-black prose-th:bg-[#ffde59] prose-th:p-3 prose-th:font-black prose-th:uppercase prose-td:border-[3px] prose-td:border-black prose-td:p-3 prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tight prose-a:text-black prose-a:font-black prose-a:underline prose-a:decoration-[3px] prose-a:decoration-[#ffde59] hover:prose-a:bg-[#ffde59] prose-strong:font-black prose-li:font-medium">
+                    <div className="prose prose-base max-w-none prose-p:my-3 prose-p:font-medium prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tight prose-strong:font-black prose-li:font-medium theme-prose">
                       <ReactMarkdown
                         remarkPlugins={[remarkGfm]}
                         components={{
@@ -251,7 +256,7 @@ export default function Chat() {
                                 />
                               </div>
                             ) : (
-                              <code {...props} className={`${className} bg-[#f4f4f0] text-black border-[2px] border-black px-1.5 py-0.5 text-sm font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] mx-1 whitespace-nowrap`}>
+                              <code {...props} className={`${className} theme-inline-code px-1.5 py-0.5 text-sm font-bold mx-1 whitespace-nowrap`}>
                                 {children}
                               </code>
                             );
@@ -277,13 +282,13 @@ export default function Chat() {
                 {msg.tool_calls && msg.tool_calls.map((tc, tcIdx) => (
                   <div 
                     key={tcIdx} 
-                    className="mt-4 flex items-center gap-3 text-sm text-black font-black bg-white px-4 py-2.5 border-[3px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] relative"
-                    style={{ borderRadius: '15px 255px 15px 225px/225px 15px 255px 15px', filter: 'url(#wobbly-edge)' }}
+                    className="mt-4 flex items-center gap-3 text-sm font-black px-4 py-2.5 border-[3px] relative"
+                    style={{ borderRadius: '15px 255px 15px 225px/225px 15px 255px 15px', filter: 'url(#wobbly-edge)', backgroundColor: "var(--surface-bg)", color: "var(--ink)", borderColor: "var(--line)", boxShadow: "4px 4px 0 0 var(--shadow-strong)" }}
                   >
                     {/* 模拟胶带效果 */}
-                    <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-4 bg-white opacity-80 border border-gray-200 rotate-2 z-10"></div>
+                    <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-4 opacity-80 border rotate-2 z-10" style={{ backgroundColor: "var(--tape)", borderColor: "var(--tape-border)" }}></div>
                     <Code className="w-5 h-5" />
-                    <span className="uppercase tracking-wide">Executing <span className="font-mono bg-[#ffde59] px-2 py-0.5 border-2 border-black ml-1 inline-block rotate-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">{tc.function.name}</span></span>
+                    <span className="uppercase tracking-wide">Executing <span className="font-mono px-2 py-0.5 border-2 ml-1 inline-block rotate-1" style={{ backgroundColor: "var(--accent)", borderColor: "var(--line)", boxShadow: "2px 2px 0 0 var(--shadow-strong)" }}>{tc.function.name}</span></span>
                   </div>
                 ))}
               </div>
@@ -293,33 +298,33 @@ export default function Chat() {
         {loading && (
           <div className="flex gap-5 items-center">
             <div 
-              className="w-12 h-12 bg-white border-[3px] border-black flex items-center justify-center shrink-0 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-              style={{ borderRadius: '255px 15px 225px 15px/15px 225px 15px 255px', filter: 'url(#wobbly-edge)' }}
+              className="w-12 h-12 border-[3px] flex items-center justify-center shrink-0"
+              style={{ borderRadius: '255px 15px 225px 15px/15px 225px 15px 255px', filter: 'url(#wobbly-edge)', backgroundColor: "var(--surface-bg)", borderColor: "var(--line)", boxShadow: "4px 4px 0 0 var(--shadow-strong)" }}
             >
-              <Bot className="w-7 h-7 text-black animate-pulse" />
+              <Bot className="w-7 h-7 animate-pulse" style={{ color: "var(--ink)" }} />
             </div>
             <div 
-              className="bg-white border-[3px] border-black px-6 py-5 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] flex gap-3 items-center relative"
-              style={{ borderRadius: '255px 15px 225px 15px/15px 225px 15px 255px', borderTopLeftRadius: '0px' }}
+              className="border-[3px] px-6 py-5 flex gap-3 items-center relative"
+              style={{ borderRadius: '255px 15px 225px 15px/15px 225px 15px 255px', borderTopLeftRadius: '0px', backgroundColor: "var(--surface-bg)", borderColor: "var(--line)", boxShadow: "6px 6px 0 0 var(--shadow-strong)" }}
             >
-              <span className="text-black font-black uppercase tracking-widest text-sm mr-2">Thinking</span>
-              <div className="w-3 h-3 bg-black rounded-none border border-black animate-bounce" style={{ borderRadius: '4px 6px 3px 7px' }}></div>
-              <div className="w-3 h-3 bg-black rounded-none border border-black animate-bounce" style={{ borderRadius: '6px 4px 7px 3px', animationDelay: "0.2s" }}></div>
-              <div className="w-3 h-3 bg-[#ffde59] rounded-none border border-black animate-bounce" style={{ borderRadius: '5px 7px 4px 6px', animationDelay: "0.4s" }}></div>
+              <span className="font-black uppercase tracking-widest text-sm mr-2" style={{ color: "var(--ink)" }}>Thinking</span>
+              <div className="w-3 h-3 rounded-none border animate-bounce" style={{ borderRadius: '4px 6px 3px 7px', backgroundColor: "var(--ink)", borderColor: "var(--line)" }}></div>
+              <div className="w-3 h-3 rounded-none border animate-bounce" style={{ borderRadius: '6px 4px 7px 3px', animationDelay: "0.2s", backgroundColor: "var(--ink)", borderColor: "var(--line)" }}></div>
+              <div className="w-3 h-3 rounded-none border animate-bounce" style={{ borderRadius: '5px 7px 4px 6px', animationDelay: "0.4s", backgroundColor: "var(--accent)", borderColor: "var(--line)" }}></div>
             </div>
           </div>
         )}
         <div ref={messagesEndRef} className="h-4" />
       </div>
 
-      <div className="p-6 md:p-8 bg-white border-t-[3px] border-black relative z-20 shadow-[0_-10px_30px_-15px_rgba(0,0,0,0.1)]">
+      <div className="p-6 md:p-8 bg-[var(--surface-bg)] border-t-[3px] border-[var(--line)] relative z-20 shadow-[0_-10px_30px_-15px_rgba(0,0,0,0.18)]">
         <div className="max-w-5xl mx-auto relative">
           {/* 输入框顶部装饰线条 */}
-          <div className="absolute -top-4 left-4 right-4 h-1 bg-black opacity-20" style={{ filter: 'url(#wobbly-edge)' }}></div>
+          <div className="absolute -top-4 left-4 right-4 h-1 opacity-20" style={{ filter: 'url(#wobbly-edge)', backgroundColor: "var(--toolbar-dim)" }}></div>
           
           <div 
-            className="relative flex items-end bg-white border-[3px] border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] focus-within:translate-x-[2px] focus-within:translate-y-[2px] focus-within:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all z-10"
-            style={{ borderRadius: '255px 15px 225px 15px/15px 225px 15px 255px', filter: 'url(#wobbly-edge)' }}
+            className="relative flex items-end border-[3px] focus-within:translate-x-[2px] focus-within:translate-y-[2px] transition-all z-10"
+            style={{ borderRadius: '255px 15px 225px 15px/15px 225px 15px 255px', filter: 'url(#wobbly-edge)', backgroundColor: "var(--surface-bg)", borderColor: "var(--line)", boxShadow: "6px 6px 0 0 var(--shadow-strong)" }}
           >
             <textarea
               value={input}
@@ -331,20 +336,21 @@ export default function Chat() {
                 }
               }}
               placeholder="TYPE YOUR COMMAND HERE..."
-              className="w-full max-h-64 min-h-[72px] p-5 pr-20 bg-transparent outline-none resize-none text-black text-lg font-bold placeholder-gray-400 uppercase tracking-wide"
+              className="w-full max-h-64 min-h-[72px] p-5 pr-20 bg-transparent outline-none resize-none text-lg font-bold uppercase tracking-wide theme-input"
+              style={{ color: "var(--ink)" }}
               rows={1}
             />
             <button
               onClick={handleSend}
               disabled={!input.trim() || loading}
-              className="absolute right-3 bottom-3 p-3 bg-black text-white border-[3px] border-black hover:bg-[#ffde59] hover:text-black disabled:opacity-40 disabled:hover:bg-black disabled:hover:text-white transition-colors group"
-              style={{ borderRadius: '15px 255px 15px 225px/225px 15px 255px 15px' }}
+              className="absolute right-3 bottom-3 p-3 border-[3px] hover:brightness-110 disabled:opacity-40 transition-colors group"
+              style={{ borderRadius: '15px 255px 15px 225px/225px 15px 255px 15px', backgroundColor: "var(--ink)", color: "var(--paper-bg)", borderColor: "var(--line)" }}
             >
               <Send className="w-6 h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
             </button>
           </div>
           <div className="flex justify-between items-center mt-3 px-2">
-            <div className="text-[10px] font-black uppercase tracking-widest text-black bg-[#ffde59] px-2 py-0.5 border-2 border-black inline-block rotate-[-1deg] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+            <div className="text-[10px] font-black uppercase tracking-widest px-2 py-0.5 border-2 inline-block rotate-[-1deg]" style={{ color: "var(--ink)", backgroundColor: "var(--accent)", borderColor: "var(--line)", boxShadow: "2px 2px 0 0 var(--shadow-strong)" }}>
               GENERIC AGENT
             </div>
           </div>

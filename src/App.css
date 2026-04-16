@@ -2,10 +2,132 @@
 @tailwind components;
 @tailwind utilities;
 
+:root,
+:root[data-theme="light"] {
+  --app-bg: #e0e5ec;
+  --chrome-bg: #ffffff;
+  --paper-bg: #fdfbf7;
+  --surface-bg: #ffffff;
+  --surface-muted: #f4f4f0;
+  --sidebar-bg: #ffffff;
+  --accent: #ffde59;
+  --accent-strong: #ffd84a;
+  --danger: #ff9999;
+  --danger-soft: #ffd3d3;
+  --ink: #000000;
+  --ink-soft: rgba(0, 0, 0, 0.7);
+  --line: #000000;
+  --shadow-strong: rgba(0, 0, 0, 1);
+  --paper-glow: rgba(255, 255, 255, 0.42);
+  --grid-dot: rgba(0, 0, 0, 0.9);
+  --toolbar-dim: rgba(0, 0, 0, 0.3);
+  --toolbar-dot: #b7b7b7;
+  --placeholder: #7a7a7a;
+  --code-bg: #1a1a1a;
+  --code-ink: #f3f3f3;
+  --tape: rgba(255, 255, 255, 0.8);
+  --tape-border: rgba(0, 0, 0, 0.08);
+}
+
+:root[data-theme="dark"] {
+  --app-bg: #171b22;
+  --chrome-bg: #11161f;
+  --paper-bg: #18202b;
+  --surface-bg: #202938;
+  --surface-muted: #273142;
+  --sidebar-bg: #131922;
+  --accent: #ffd84a;
+  --accent-strong: #ffef8f;
+  --danger: #ff8b7a;
+  --danger-soft: #513139;
+  --ink: #f7ecd1;
+  --ink-soft: rgba(247, 236, 209, 0.75);
+  --line: #f7ecd1;
+  --shadow-strong: rgba(0, 0, 0, 0.9);
+  --paper-glow: rgba(255, 239, 207, 0.08);
+  --grid-dot: rgba(247, 236, 209, 0.22);
+  --toolbar-dim: rgba(247, 236, 209, 0.2);
+  --toolbar-dot: rgba(247, 236, 209, 0.35);
+  --placeholder: rgba(247, 236, 209, 0.45);
+  --code-bg: #0f141b;
+  --code-ink: #f4f1ea;
+  --tape: rgba(247, 236, 209, 0.14);
+  --tape-border: rgba(247, 236, 209, 0.14);
+}
+
 html, body, #root {
   height: 100%;
   margin: 0;
-  background-color: #f9fafb;
-  color: #333;
+  background-color: var(--app-bg);
+  color: var(--ink);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.theme-prose {
+  color: var(--ink);
+}
+
+.theme-prose :where(p, li, strong, em, blockquote, h1, h2, h3, h4, h5, h6) {
+  color: var(--ink);
+}
+
+.theme-prose :where(a) {
+  color: var(--ink);
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 3px;
+  font-weight: 800;
+}
+
+.theme-prose :where(a:hover) {
+  background-color: var(--accent);
+}
+
+.theme-prose :where(table) {
+  border-collapse: collapse;
+  border: 3px solid var(--line);
+}
+
+.theme-prose :where(th, td) {
+  border: 3px solid var(--line);
+  color: var(--ink);
+  padding: 0.75rem;
+}
+
+.theme-prose :where(th) {
+  background: var(--accent);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.theme-prose :where(pre) {
+  background: var(--code-bg) !important;
+  color: var(--code-ink) !important;
+  border: 3px solid var(--line);
+  box-shadow: 5px 5px 0 0 var(--shadow-strong);
+  overflow: hidden;
+  padding: 0;
+}
+
+.theme-inline-code {
+  background: var(--surface-muted);
+  color: var(--ink);
+  border: 2px solid var(--line);
+  box-shadow: 2px 2px 0 0 var(--shadow-strong);
+}
+
+.theme-input::placeholder {
+  color: var(--placeholder);
+  opacity: 1;
+}
+
+.theme-card-shadow {
+  box-shadow: 6px 6px 0 0 var(--shadow-strong);
+}
+
+.theme-card-shadow-soft {
+  box-shadow: 4px 4px 0 0 var(--shadow-strong);
 }
